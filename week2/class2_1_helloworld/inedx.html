@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Practice in Class 2_1: Hello World</h1>
+    <h3>Author: Troy Washington</h3>
+    <h3>Date: October 11th, 2025</h3>
+    <br />
+    <!-- Web page -->
+
+    <p id="js">This is my first html page in class 2_1</p>
+    <!-- Alert popup message -->
+    <button onclick="alert('Task2: Troy Washington')">Click me!</button>
+
+    <script>
+      // Console message
+      console.log("Task3: Troy Washington");
+      // JavaScript to insert Hello World
+      document.getElementById("js").textContent = "Task1: Troy Washington";
+
+      const styles = `
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f0f0f0;
+          color: #333;
+          margin: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        }
+        h1 {
+          color: #007acc;
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+        }
+        h3 {
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+        }
+        button {
+          padding: 10px 20px;
+          background-color: #007acc;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        button:hover {
+          background-color: #005f99;
+        }
+      `;
+      const styleSheet = document.createElement("style");
+      styleSheet.type = "text/css";
+      styleSheet.innerText = styles;
+      document.head.appendChild(styleSheet);
+    </script>
+  </body>
+</html>
