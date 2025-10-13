@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Input Page</title>
+    <style>
+      #wrapper {
+        width: 940px;
+        margin: 20px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <script>
+        let begin = prompt(
+          "Interview Information Page. \n  Please press OK to continue.",
+          "OK"
+        );
+        if (begin != null) {
+          document.write("<h1>Interviewee Information Page</h1>");
+          document.write(prompt("Please enter the candidate's name:"));
+          document.write("<br>");
+          document.write(prompt("Please enter the candidate's email address:"));
+          document.write("<br>");
+          document.write(
+            prompt(
+              "Please enter the candidate's available start date in MM/DD/YYYY format:"
+            )
+          );
+          document.write("<br>");
+        } else {
+          document.write("No information provided.");
+        }
+      </script>
+    </div>
+  </body>
+</html>
+
+<!-- 
+Practice incorporating nested functions, which are functions within other functions, into your coding exercises. By utilizing nested functions, you can effectively structure and organize your code while leveraging the concept of closures. This allows inner functions to access the parameters from their parent functions.
+
+
+This script will serve as a pre-processor for human interviews. It allows the interviewers to gather basic information and ask common interview questions from interviewees in a structured manner. Prompting the user for details such as the interviewee name, contact information, and available start date.
+
+Pseudocode:
+1. Write introduction to the Interviewer and print to web browser.
+2. Ask user for interviewees name and print to web browser.
+3. Ask user for interviewees email address and print to web browser.
+4. Ask user for interviewees available start date and print to web browser. 
+
+One piece of information per line.  For example, on the first line we should see:
+
+Interviewee Information Page
+
+Candidate name:  Joe Schmoe
+
+Candidate email address: joe@gmail.com
+
+Candidate available start date: 7/2/2023
+-->
