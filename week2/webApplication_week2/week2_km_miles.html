@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kilometers & Mileopsy</title>
+    <!-- Web application that can be used for converting kilometer values to mile values and vice versa. -->
+  </head>
+  <body>
+    <!-- HTML -->
+    <h1>Kilometers & Mileopsy</h1>
+    <h2>Convert kilometers to miles and miles to kilometers</h2>
+    <h3>Author: Troy Washington</h3>
+    <hr />
+    <br />
+    <p>Instructions:</p>
+    <i>
+      This web application will convert kilometers to miles and miles to
+      kilometers. Please follow the prompts to complete the conversion.
+    </i>
+    <br />
+    <i>Refresh page to begin.</i>
+    <br />
+    <hr />
+    <br />
+    <br />
+    <div class="result"></div>
+    <!-- javascript -->
+    <script>
+      // Get reference to the result div
+      const resultDiv = document.querySelector(".result");
+      let choice = prompt(
+        "Would you like to convert to kilometers or miles?",
+        "Type 'K' for kilometers & 'M' for miles."
+      );
+      // Evaluate for null input and normalize
+      if (choice === null) {
+        resultDiv.innerHTML =
+          "<h2>No input provided. Please refresh page.</h2>";
+      } else {
+        choice = choice.toUpperCase().trim();
+      }
+      // Conversion functions and prompts
+      if (choice === "K") {
+        function toKilometers(miles) {
+          return miles * 1.60934;
+        }
+        let miles = parseFloat(
+          prompt("Please enter the number of miles you would like to convert:")
+        );
+        if (!isNaN(miles)) {
+          resultDiv.innerHTML =
+            miles +
+            " miles is equal to " +
+            toKilometers(miles).toFixed(2) +
+            " kilometers.";
+        } else {
+          resultDiv.innerHTML =
+            "<h2>Invalid input. Please refresh and enter a number.</h2>";
+        }
+      } else if (choice === "M") {
+        function toMiles(kilometers) {
+          return kilometers / 1.60934;
+        }
+        let kilometers = parseFloat(
+          prompt(
+            "Please enter the number of kilometers you would like to convert:"
+          )
+        );
+        if (!isNaN(kilometers)) {
+          resultDiv.innerHTML =
+            kilometers +
+            " kilometers is equal to " +
+            toMiles(kilometers).toFixed(2) +
+            " miles.";
+        } else {
+          resultDiv.innerHTML =
+            "<h2>Invalid input. Please refresh and enter a number.</h2>";
+        }
+      } else {
+        resultDiv.innerHTML =
+          "<h2>Invalid choice. Please refresh page and type 'K' or 'M'</h2>";
+      }
+    </script>
+  </body>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    h2 {
+      color: #34495e;
+    }
+    hr {
+      border: 1px solid #bdc3c7;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #27ae60;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</html>
