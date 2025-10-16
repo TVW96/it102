@@ -7,3 +7,7 @@
 
 ### User Input
 <img width="534" height="238" alt="Screenshot 2025-10-13 at 12 18 17 AM" src="https://github.com/user-attachments/assets/f9cfc3b4-06f2-463c-8c3f-731ad70dcea4" />
+
+### Kilometers & Mileopsy
+<img width="1449" height="312" alt="Screenshot 2025-10-15 at 9 47 03 PM" src="https://github.com/user-attachments/assets/64390eef-918c-406f-8cb1-12e0b5b5fb2e" />
+
