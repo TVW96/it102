@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASCII Art Square</title>
+  </head>
+  <body>
+    <h1>ASCII Art: Squares</h1>
+    <pre id="asc2-art"></pre>
+  </body>
+  <script>
+    var size;
+    // Prompt user for size of the square
+    do {
+      size = parseInt(
+        prompt("Enter the size of the square (a positive integer):", "5")
+      );
+    } while (isNaN(size) || size <= 0);
+
+    // Generate ASCII Art: Squares
+    try {
+      document.getElementById("asc2-art").innerText = drawSquare(size);
+      document.getElementById("asc2-art").innerText +=
+        "\n" + drawHollowSquare(size);
+    } catch (error) {
+      console.error("An error occurred while generating ASCII art:", error);
+    }
+
+    // Function to draw filled square
+    function drawSquare(size) {
+      let square = "";
+      for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+          square += "*";
+        }
+        square += "\n";
+      }
+      return square;
+    }
+    console.log(drawSquare(5));
+
+    // Function to draw hollow square
+    function drawHollowSquare(size) {
+      let square = "";
+      for (let i = 0; i < size; i++) {
+        // Middle Lines
+        if (i > 0 && i < size - 1) {
+          square += "*";
+          for (let k = 0; k < size - 2; k++) {
+            square += " ";
+          }
+          square += "*\n";
+          continue;
+        } else {
+          // Top and Bottom Lines
+          for (let j = 0; j < size; j++) {
+            square += "*";
+          }
+          square += "\n";
+        }
+      }
+      return square;
+    }
+    console.log(drawHollowSquare(5));
+  </script>
+</html>
