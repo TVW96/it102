@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payroll</title>
+    <script>
+      // Gross Pay
+      function calculateGrossPay(hoursWorked) {
+        const hourlyRate = 19.0; // Fixed hourly rate
+        let grossPay = 0;
+        if (hoursWorked < 40) {
+          grossPay = hoursWorked * hourlyRate;
+        } else {
+          const overtimeHours = hoursWorked - 40;
+          grossPay = 40 * hourlyRate + overtimeHours * hourlyRate * 1.5;
+        }
+        return grossPay;
+      }
+      // Social Security
+      function calculateSocialSecurity(grossPay) {
+        const socialSecurityRate = 0.062;
+        const socialSecurityTax = grossPay * socialSecurityRate;
+        return socialSecurityTax;
+      }
+      // Medicare
+      function calculateMedicare(grossPay) {
+        const medicareRate = 0.0145;
+        const medicare = grossPay * medicareRate;
+        return medicare;
+      }
+      // Withholding
+      function calculateWithholding(grossPay, allowances) {
+        const withholdingAllowanceAmount = 77.9;
+        const withholdingBase = allowances * withholdingAllowanceAmount;
+        const taxableIncome = grossPay - withholdingBase;
+        const withholdingRate = 0.2;
+        const withholding = taxableIncome * withholdingRate;
+        return withholding;
+      }
+      // Net Pay
+      function calculateNetPay(
+        grossPay,
+        socialSecurity,
+        medicare,
+        withholding
+      ) {
+        const netPay = grossPay - socialSecurity - medicare - withholding;
+        return netPay;
+      }
+      // Pay stub
+      function generatePayStub(employeeName, hoursWorked, allowances) {
+        const grossPay = calculateGrossPay(hoursWorked);
+        const socialSecurity = calculateSocialSecurity(grossPay);
+        const medicare = calculateMedicare(grossPay);
+        const withholding = calculateWithholding(grossPay, allowances);
+        const netPay = calculateNetPay(
+          grossPay,
+          socialSecurity,
+          medicare,
+          withholding
+        );
+
+        let payStub = `Employee Name: ${employeeName}\n`;
+        payStub += `Hours Worked: ${hoursWorked}\n`;
+        payStub += `Gross Pay: $${grossPay.toFixed(2)}\n`;
+        payStub += `Social Security: $${socialSecurity.toFixed(2)}\n`;
+        payStub += `Medicare: $${medicare.toFixed(2)}\n`;
+        payStub += `Withholding: $${withholding.toFixed(2)}\n`;
+        payStub += `Net Pay: $${netPay.toFixed(2)}\n`;
+        document.getElementById("payrollStub").textContent = payStub;
+      }
+
+      // Main Function
+      function doPayroll() {
+        const hoursWorked = parseFloat(document.employeeForm[2].value.trim());
+        const allowances = parseInt(document.employeeForm[3].value.trim());
+        const employeeName =
+          document.employeeForm[0].value.trim() +
+          " " +
+          document.employeeForm[1].value.trim();
+        const payStub = generatePayStub(employeeName, hoursWorked, allowances);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Lab 3_3 - Payroll</h1>
+    <hr />
+
+    <form name="employeeForm">
+      First Name: <input type="text" /><br />
+      Last Name: <input type="text" /><br />
+      Enter Hours Worked: <input type="text" /><br />
+      Enter number of withholding allowances: <input type="text" /><br />
+      <input type="button" value="Submit" onclick="doPayroll()" />
+    </form>
+    <pre id="payrollStub"></pre>
+  </body>
+</html>
