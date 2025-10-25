@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+  </head>
+  <body>
+    <h1>SOTD03 - Login Form</h1>
+    <hr />
+    <form name="customerDataForm">
+      <!-- Set id for form input fields  -->
+      First Name: <input type="text" id="firstName" /><br />
+      Last Name: <input type="text" id="lastName" /><br />
+      Email Address: <input type="text" id="email" /><br />
+      Password: <input type="password" id="password" /><br />
+      <!-- Onclick of submit button run JS function display data -->
+      <input type="button" value="Submit" onclick="displayData()" />
+    </form>
+    <h3>Customer Data</h3>
+    <!-- Data will display here -->
+    <p id="custDataDisplay"></p>
+  </body>
+  <script>
+    function displayData() {
+      // Set var values using respective form field and IDs
+      var firstName = document.getElementById("firstName").value;
+      var lastName = document.getElementById("lastName").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      // Get data display area using its ID
+      var displayArea = document.getElementById("custDataDisplay");
+      // Set data display area innerHTML value
+      displayArea.innerHTML =
+        firstName +
+        " " +
+        lastName +
+        "<br/>Email: " +
+        email +
+        "<br/>Password: " +
+        password;
+      // Log data display area innerHTML to console
+      console.log(displayArea.innerHTML);
+    }
+  </script>
+</html>
