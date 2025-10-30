@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sudoku Solver & Generator</title>
+    <script src="sudoku.js">
+
+      // Returns false if num is found in the specified row.
+      // Ensures that num is not repeated in the 3x3 sub-grid.
+      function unUsedInBox(grid, rowStart, colStart, num) {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (grid[rowStart + i][colStart + j] === num) {
+                    return false;
+                }
+            }
+        }
+        return true;
+      }
+
+      // Assign valid random numbers to the 3x3 sub-grid.
+      function fillBox(grid, row, col) {
+          let num;
+          for (let i = 0; i < 3; i++) {
+              for (let j = 0; j < 3; j++) {
+                  do {
+                      num = Math.floor(Math.random() * 9 + 1);
+                  } while (!unUsedInBox(grid, row, col, num));
+                  grid[row + i][col + j] = num;
+              }
+          }
+      }
+
+      // Returns false if num is found in the specified row.
+      // Ensures that num is not repeated in given row.
+      function unUsedInRow(grid, i, num) {
+          for (let j = 0; j < 9; j++) {
+              if (grid[i][j] === num) {
+                  return false;
+              }
+          }
+          return true;
+      }
+
+      // Returns false if num is found in the specified column.
+      // Ensures that num is not repeated in given column.
+      function unUsedInCol(grid, j, num) {
+              for (let i = 0; i < 9; i++) {
+                  if (grid[i][j] === num) {
+                      return false;
+                  }
+              }
+              return true;
+      }
+
+      // Check if safe to assign num to given row, col in Sudoku grid
+      // Ensure num is not used in row, column, or box.
+      function checkIfSafe(grid, i, j, num) {
+          return (
+              unUsedInRow(grid, i, num) &&
+              unUsedInCol(grid, j, num) &&
+              unUsedInBox(grid, i - (i % 3), j - (j % 3), num)
+          );
+      }
+
+      // Fill the diagonal 3x3 sub-grids
+      // The diagonal blocks are filled to simplify the generation process.
+      // This helps in reducing the complexity of ensuring Sudoku rules are followed.
+      // Each diagonal block is independent of the others.
+      function fillDiagonal(grid) {
+          for (let i = 0; i < 9; i += 3) {
+              fillBox(grid, i, i);
+          }
+      }
+
+      function fillRemaining(grid, i, j) {
+
+          // If we reach the end of the grid, return true
+          if (i === 9) {
+              return true;
+          }
+
+          // Move to next row if we reach the end of the current row
+          if (j === 9) {
+              return fillRemaining(grid, i + 1, 0);
+          }
+
+          // Skip filled cells
+          if(grid[i][j] !== 0) {
+              return fillRemaining(grid, i, j + 1);
+          }
+
+          // Try numbers 1-9 for the empty cell
+          for (let num = 1; num <= 9; num++) {
+              if (checkIfSafe(grid, i, j, num)) {
+                  grid[i][j] = num;
+                  if (fillRemaining(grid, i, j + 1)) {
+                      return true;
+                  }
+                  grid[i][j] = 0; // Backtrack
+              }
+          }
+          return false;
+      }
+
+      function removeKDigits(grid, k) {
+          while (k > 0) {
+                // Pick a random cell
+                let cellId = Math.floor(Math.random() * 81);
+
+                // Get the row index
+                let i = Math.floor(cellId / 9);
+
+                // Get the column index
+                let j = cellId % 9;
+
+                // Remove the digit if the cell is not already empty
+                if (grid[i][j] !== 0) {
+                    // Empty the cell
+                    grid[i][j] = 0;
+
+                    // Decrease the count of digits to remove
+                    k--;
+                }
+          }
+      }
+
+      function sudokuGenerator(k) {
+          // Initialize an empty 9x9 grid
+          let grid = Array.from({ length: 9 }, () => Array(9).fill(0));
+
+          return grid;
+      }
+
+
+      let k = 20; // Number of cells to remove
+        let sudokuGrid = sudokuGenerator(k);
+        sudoku.forEach(row => console.log(row.join(" ")));
+    </script>
+  </head>
+  <body></body>
+</html>
+
+<!-- Program for Sudoku Generator -->
+<!-- -----------------------------
+Given an integer k, the task is to generate a 9 x 9 Sudoku grid having k empty cells while following the below set of rules: 
+
+  1. In all 9 submatrices 3x3, the elements should be 1-9, without repitition.
+  2. In all rows, there should be elements between 1-9, without repitition.
+  3. In all columns, there should be elements between 1-9, without repitition. 
+-->
+
+<!-- Pseudo code: -->
+<!-- 1: Generate a fully filled valid Sudoku grid.
+        2: Randomly remove k cells from the grid to create empty cells.
+        3: Ensure that the resulting grid still adheres to Sudoku rules.
+        4: Return the generated Sudoku grid with k empty cells.  
+    -->
