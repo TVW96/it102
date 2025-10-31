@@ -139,7 +139,21 @@
         sudoku.forEach(row => console.log(row.join(" ")));
     </script>
   </head>
-  <body></body>
+  <body>
+    <head>
+      <h1>Sudoku Solver & Generator</h1>
+    </head>
+    <section>
+      <p>
+        This program generates a 9x9 Sudoku grid with a specified number of
+        empty cells while adhering to Sudoku rules.
+      </p>
+      <div>
+        <h2>Generated Sudoku Grid:</h2>
+        <pre id="sudoku-grid"></pre>
+      </div>
+    </section>
+  </body>
 </html>
 
 <!-- Program for Sudoku Generator -->
@@ -152,8 +166,9 @@ Given an integer k, the task is to generate a 9 x 9 Sudoku grid having k empty c
 -->
 
 <!-- Pseudo code: -->
-<!-- 1: Generate a fully filled valid Sudoku grid.
+<!-- 
+        1: Generate a fully filled valid Sudoku grid.
         2: Randomly remove k cells from the grid to create empty cells.
         3: Ensure that the resulting grid still adheres to Sudoku rules.
         4: Return the generated Sudoku grid with k empty cells.  
-    -->
+-->
