@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    function Card(suit, rank) {
+      //create the suit property and assign it the value from the parameter.
+      this.suit = suit;
+      //create the rank property and assign it the value from the parameter.
+      this.rank = rank;
+      //create the isVisible property and assign boolean false to it.
+      this.isVisible = FALSE;
+      //create the show() method.  This method assigns the boolean true to this.isVisible.
+      this.show = function () {
+        this.isVisible = true;
+      };
+      //create the hide() method.  This method assigns the boolean false to this.isVisible.
+      this.hide = function () {
+        this.isVisible = false;
+      };
+    }
+
+    var card1 = new Card("Hearts", 9);
+    var card2 = new Card("Hearts", 10);
+
+    alert(card1.suit + " of " + card1.rank + " " + card1.isVisible);
+    alert(card2.suit + " of " + card2.rank + " " + card2.isVisible);
+
+    card02.show();
+    card01.show();
+  </script>
+  <!-- 
+    Instantiate at least 2 different cards. (You can call them card1 and card2, or something like that.) 
+    Display the 2 cards to the web page with the Suit, Rank and isVisible values.
+    Use the show() or hide() on both of the cards to change the "isVisible" object property.
+    Again, display the 2 cards to the web page with the Suit, Rank and isVisible values to show the change. 
+    -->
+</html>
