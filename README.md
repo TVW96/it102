@@ -1,5 +1,41 @@
 ## IT102
+---
+### Quarter Project
+<details>
+    <summary>Part 1</summary>
+    <h1 align="center">Sudoku Generator & Solver</h1>
+</details>
+<details>
+    <summary>Part 2</summary>
+  
+  Given an integer `k`, the task is to generate a 9 x 9 Sudoku grid having `k` empty cells while following the below set of rules.
+  
+  **Rules:**
+  
+  1. In all 9 submatrices 3x3, the elements should be 1-9, without repitition.
+  2. In all rows, there should be elements between 1-9, without repitition.
+  3. In all columns, there should be elements between 1-9, without repitition. 
+    
+  **Steps to complete:**
+  
+  1. Generate a fully filled valid Sudoku grid.
+  2. Randomly remove k cells from the grid to create empty cells.
+  3. Ensure that the resulting grid still adheres to Sudoku rules.
+  4. Return the generated Sudoku grid with k empty cells.  
 
+  **Psuedo code/program:**
+
+    1. Create functions to check for unique 1-9 values in BOX, COLUMN, and ROW values.
+    2. Fill the center 3x3 submatrices with random values of 1-9 validate each input to ensure set of rules are followed.
+    3. Fill the adjacent diagonal 3x3 submatrices, check validate for unique number values using unUsedInBox(), same as center 3x3 values.
+    4. Utilizing the unUsedInRow(), unUsedInCol(), and unUsedInBox() functions, fill the remaining submatrices.
+        
+</details>
+
+---
+
+
+### Weekly Assignments
 <details>
 <summary>Week1</summary>
   
@@ -47,7 +83,6 @@ Login Form
 Payroll
 --- 
 <img width="458" height="326" alt="Screenshot 2025-11-03 at 11 47 05 PM" src="https://github.com/user-attachments/assets/83abd9ee-f8bb-45f3-b079-4159d68ac728" />
-
 </details>
 
 
@@ -63,8 +98,19 @@ Grocery list
 Lets make a deal
 ---
 <img width="315" height="197" alt="Screenshot 2025-11-04 at 12 06 02 AM" src="https://github.com/user-attachments/assets/1142ae57-e16d-4633-9081-25e0ee83ed11" />
-
 </details>
 
 
+
+
+<details>
+  <summary>Week5</summary>
+
+  Deck of cards
+  ---
+
+  Playing card object
+  ---
+  
+</details>
 
