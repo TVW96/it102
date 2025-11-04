@@ -18,7 +18,32 @@
     <p id="prize">Good Luck!</p>
 
     <script>
-      function doorPrize() {}
+      const prizes = [
+        "A New Car!",
+        "A Vacation!",
+        "A Laptop!",
+        "A Gift Card!",
+        "A Bicycle!",
+        "A Smartphone!",
+        "A Goat!",
+        "Nothing, Try Again!",
+      ];
+
+      const doorPrizes = {
+        1: prizes[Math.floor(Math.random() * prizes.length)],
+        2: prizes[Math.floor(Math.random() * prizes.length)],
+        3: prizes[Math.floor(Math.random() * prizes.length)],
+      };
+
+      function doorPrize() {
+        const selectedDoor = document.getElementById("doorSelection").value;
+        if (selectedDoor == "0") {
+          alert("Please select a door.");
+          return;
+        }
+        const prize = doorPrizes[selectedDoor];
+        document.getElementById("prize").innerText = "Your prize is" + prize;
+      }
     </script>
   </body>
 </html>
