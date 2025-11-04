@@ -8,7 +8,8 @@ IT102 project folder:
 <img width="250" height="215" alt="Screenshot 2025-10-12 at 10 52 44 PM" src="https://github.com/user-attachments/assets/aa4c3273-3142-4a14-a4f1-25e778d5bb75" />
 </details>
 
---- 
+
+
 
 <details>
 <summary>Week2</summary>
@@ -29,7 +30,9 @@ Create a functino that will accept user input and calculate the exchange of (kil
 <img width="250" height="215" alt="Screenshot 2025-10-15 at 9 47 03 PM" src="https://github.com/user-attachments/assets/64390eef-918c-406f-8cb1-12e0b5b5fb2e" />
 </details>
 
----
+
+
+
 <details>
 <summary>Week3</summary>
 
@@ -47,14 +50,13 @@ Payroll
 
 </details>
 
+
+
+
 <details>
 <summary>Week4</summary>
 This is a dropdown with text!
 </details>
 
-## Week 2 screenshots: 
-
-
-### Kilometers & Mileopsy
 
 
