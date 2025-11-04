@@ -55,7 +55,15 @@ Payroll
 
 <details>
 <summary>Week4</summary>
-This is a dropdown with text!
+
+Grocery list
+---
+<img width="314" height="320" alt="Screenshot 2025-11-03 at 11 58 52 PM" src="https://github.com/user-attachments/assets/3995a28e-ac03-4472-9655-7f66c10cf735" />
+
+Lets make a deal
+---
+<img width="315" height="197" alt="Screenshot 2025-11-04 at 12 06 02 AM" src="https://github.com/user-attachments/assets/1142ae57-e16d-4633-9081-25e0ee83ed11" />
+
 </details>
 
 
