@@ -19,10 +19,29 @@
     <script>
       function createGroceryList() {
         //Check for empty input from user
+        if (document.getElementById("groceryInput").value.trim().length === 0) {
+          alert("Please enter at least one grocery item.");
+          return;
+        }
         // Split input string into array
+        const groceryItems = document
+          .getElementById("groceryInput")
+          .value.split(",");
         // Trim white space from each items by looping through array
+        for (let i = 0; i < groceryItems.length; i++) {
+          groceryItems[i] = groceryItems[i].trim();
+        }
+        // remove special characters and numbers from each item
+        for (let i = 0; i < groceryItems.length; i++) {
+          groceryItems[i] = groceryItems[i].replace(/[^a-zA-Z\s]/g, "");
+        }
         // Sort groceryItems alphabetically
+        groceryItems.sort();
         // Display grocery list to webpage
+        document.getElementById("groceryList").innerHTML =
+          "<strong>Your Grocery List:</strong><br>" + groceryItems.join("<br>");
+        // Display total number of items
+        document.getElementById("totalItems").innerText = groceryItems.length;
       }
     </script>
   </body>
