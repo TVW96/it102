@@ -25,10 +25,10 @@
 
   **Psuedo code/program:**
 
-    1. Create functions to check for unique 1-9 values in BOX, COLUMN, and ROW values.
-    2. Fill the center 3x3 submatrices with random values of 1-9 validate each input to ensure set of rules are followed.
-    3. Fill the adjacent diagonal 3x3 submatrices, check validate for unique number values using unUsedInBox(), same as center 3x3 values.
-    4. Utilizing the unUsedInRow(), unUsedInCol(), and unUsedInBox() functions, fill the remaining submatrices.
+1. Create functions to check for unique 1-9 values in BOX, COLUMN, and ROW values.
+2. Fill the center 3x3 submatrices with random values of 1-9 validate each input to ensure set of rules are followed.
+3. Fill the adjacent diagonal 3x3 submatrices, check validate for unique number values using unUsedInBox(), same as center 3x3 values.
+4. Utilizing the unUsedInRow(), unUsedInCol(), and unUsedInBox() functions, fill the remaining submatrices.
         
 </details>
 
