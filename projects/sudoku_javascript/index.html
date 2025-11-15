@@ -4,156 +4,473 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sudoku Solver & Generator</title>
-    <script src="sudoku.js">
-
-      // Returns false if num is found in the specified row.
-      // Ensures that num is not repeated in the 3x3 sub-grid.
-      function unUsedInBox(grid, rowStart, colStart, num) {
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (grid[rowStart + i][colStart + j] === num) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    <style>
+      /* Basic styles for the Sudoku grid */
+      table {
+        border-collapse: collapse;
+        margin: 20px auto;
+        border: 5px solid #000;
       }
-
-      // Assign valid random numbers to the 3x3 sub-grid.
-      function fillBox(grid, row, col) {
-          let num;
-          for (let i = 0; i < 3; i++) {
-              for (let j = 0; j < 3; j++) {
-                  do {
-                      num = Math.floor(Math.random() * 9 + 1);
-                  } while (!unUsedInBox(grid, row, col, num));
-                  grid[row + i][col + j] = num;
-              }
-          }
+      td {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        border: 1px solid #000;
+        font-size: 24px;
       }
-
-      // Returns false if num is found in the specified row.
-      // Ensures that num is not repeated in given row.
-      function unUsedInRow(grid, i, num) {
-          for (let j = 0; j < 9; j++) {
-              if (grid[i][j] === num) {
-                  return false;
-              }
-          }
-          return true;
+      td.empty {
+        background-color: #f0f0f0;
       }
-
-      // Returns false if num is found in the specified column.
-      // Ensures that num is not repeated in given column.
-      function unUsedInCol(grid, j, num) {
-              for (let i = 0; i < 9; i++) {
-                  if (grid[i][j] === num) {
-                      return false;
-                  }
-              }
-              return true;
+      td.filled {
+        background-color: #d0ffd0;
       }
-
-      // Check if safe to assign num to given row, col in Sudoku grid
-      // Ensure num is not used in row, column, or box.
-      function checkIfSafe(grid, i, j, num) {
-          return (
-              unUsedInRow(grid, i, num) &&
-              unUsedInCol(grid, j, num) &&
-              unUsedInBox(grid, i - (i % 3), j - (j % 3), num)
-          );
+      tr:nth-child(3n) td {
+        border-bottom: 5px solid #000;
       }
-
-      // Fill the diagonal 3x3 sub-grids
-      // The diagonal blocks are filled to simplify the generation process.
-      // This helps in reducing the complexity of ensuring Sudoku rules are followed.
-      // Each diagonal block is independent of the others.
-      function fillDiagonal(grid) {
-          for (let i = 0; i < 9; i += 3) {
-              fillBox(grid, i, i);
-          }
+      td:nth-child(3n) {
+        border-right: 5px solid #000;
       }
-
-      function fillRemaining(grid, i, j) {
-
-          // If we reach the end of the grid, return true
-          if (i === 9) {
-              return true;
-          }
-
-          // Move to next row if we reach the end of the current row
-          if (j === 9) {
-              return fillRemaining(grid, i + 1, 0);
-          }
-
-          // Skip filled cells
-          if(grid[i][j] !== 0) {
-              return fillRemaining(grid, i, j + 1);
-          }
-
-          // Try numbers 1-9 for the empty cell
-          for (let num = 1; num <= 9; num++) {
-              if (checkIfSafe(grid, i, j, num)) {
-                  grid[i][j] = num;
-                  if (fillRemaining(grid, i, j + 1)) {
-                      return true;
-                  }
-                  grid[i][j] = 0; // Backtrack
-              }
-          }
-          return false;
-      }
-
-      function removeKDigits(grid, k) {
-          while (k > 0) {
-                // Pick a random cell
-                let cellId = Math.floor(Math.random() * 81);
-
-                // Get the row index
-                let i = Math.floor(cellId / 9);
-
-                // Get the column index
-                let j = cellId % 9;
-
-                // Remove the digit if the cell is not already empty
-                if (grid[i][j] !== 0) {
-                    // Empty the cell
-                    grid[i][j] = 0;
-
-                    // Decrease the count of digits to remove
-                    k--;
-                }
-          }
-      }
-
-      function sudokuGenerator(k) {
-          // Initialize an empty 9x9 grid
-          let grid = Array.from({ length: 9 }, () => Array(9).fill(0));
-
-          return grid;
-      }
-
-
-      let k = 20; // Number of cells to remove
-        let sudokuGrid = sudokuGenerator(k);
-        sudoku.forEach(row => console.log(row.join(" ")));
-    </script>
+    </style>
   </head>
   <body>
     <head>
       <h1>Sudoku Solver & Generator</h1>
     </head>
-    <section>
-      <p>
-        This program generates a 9x9 Sudoku grid with a specified number of
-        empty cells while adhering to Sudoku rules.
-      </p>
-      <div>
-        <h2>Generated Sudoku Grid:</h2>
-        <pre id="sudoku-grid"></pre>
+    <main>
+      <div id="sudoku-grid">
+        <!-- Grid Table -->
+        <table>
+          <tr>
+            <td
+              id="cell-1-1"
+              onclick="cellClick(1, 1)"
+              onmouseover="cellHover(1, 1)"
+              onmouseleave="cellLeave(1, 1)"
+            ></td>
+            <td
+              id="cell-1-2"
+              onclick="cellClick(1, 2)"
+              onmouseover="cellHover(1, 2)"
+              onmouseleave="cellLeave(1, 2)"
+            ></td>
+            <td
+              id="cell-1-3"
+              onclick="cellClick(1, 3)"
+              onmouseover="cellHover(1, 3)"
+              onmouseleave="cellLeave(1, 3)"
+            ></td>
+            <td
+              id="cell-1-4"
+              onclick="cellClick(1, 4)"
+              onmouseover="cellHover(1, 4)"
+            ></td>
+            <td
+              id="cell-1-5"
+              onclick="cellClick(1, 5)"
+              onmouseover="cellHover(1, 5)"
+            ></td>
+            <td
+              id="cell-1-6"
+              onclick="cellClick(1, 6)"
+              onmouseover="cellHover(1, 6)"
+            ></td>
+            <td
+              id="cell-1-7"
+              onclick="cellClick(1, 7)"
+              onmouseover="cellHover(1, 7)"
+            ></td>
+            <td
+              id="cell-1-8"
+              onclick="cellClick(1, 8)"
+              onmouseover="cellHover(1, 8)"
+            ></td>
+            <td
+              id="cell-1-9"
+              onclick="cellClick(1, 9)"
+              onmouseover="cellHover(1, 9)"
+            ></td>
+          </tr>
+          <tr>
+            <td
+              id="cell-2-1"
+              onclick="cellClick(2, 1)"
+              onmouseover="cellHover(2, 1)"
+            ></td>
+            <td
+              id="cell-2-2"
+              onclick="cellClick(2, 2)"
+              onmouseover="cellHover(2, 2)"
+            ></td>
+            <td
+              id="cell-2-3"
+              onclick="cellClick(2, 3)"
+              onmouseover="cellHover(2, 3)"
+            ></td>
+            <td
+              id="cell-2-4"
+              onclick="cellClick(2, 4)"
+              onmouseover="cellHover(2, 4)"
+            ></td>
+            <td
+              id="cell-2-5"
+              onclick="cellClick(2, 5)"
+              onmouseover="cellHover(2, 5)"
+            ></td>
+            <td
+              id="cell-2-6"
+              onclick="cellClick(2, 6)"
+              onmouseover="cellHover(2, 6)"
+            ></td>
+            <td
+              id="cell-2-7"
+              onclick="cellClick(2, 7)"
+              onmouseover="cellHover(2, 7)"
+            ></td>
+            <td
+              id="cell-2-8"
+              onclick="cellClick(2, 8)"
+              onmouseover="cellHover(2, 8)"
+            ></td>
+            <td
+              id="cell-2-9"
+              onclick="cellClick(2, 9)"
+              onmouseover="cellHover(2, 9)"
+            ></td>
+          </tr>
+          <tr>
+            <td
+              id="cell-3-1"
+              onclick="cellClick(3, 1)"
+              onmouseover="cellHover(3, 1)"
+            ></td>
+            <td
+              id="cell-3-2"
+              onclick="cellClick(3, 2)"
+              onmouseover="cellHover(3, 2)"
+            ></td>
+            <td
+              id="cell-3-3"
+              onclick="cellClick(3, 3)"
+              onmouseover="cellHover(3, 3)"
+            ></td>
+            <td
+              id="cell-3-4"
+              onclick="cellClick(3, 4)"
+              onmouseover="cellHover(3, 4)"
+            ></td>
+            <td
+              id="cell-3-5"
+              onclick="cellClick(3, 5)"
+              onmouseover="cellHover(3, 5)"
+            ></td>
+            <td
+              id="cell-3-6"
+              onclick="cellClick(3, 6)"
+              onmouseover="cellHover(3, 6)"
+            ></td>
+            <td
+              id="cell-3-7"
+              onclick="cellClick(3, 7)"
+              onmouseover="cellHover(3, 7)"
+            ></td>
+            <td
+              id="cell-3-8"
+              onclick="cellClick(3, 8)"
+              onmouseover="cellHover(3, 8)"
+            ></td>
+            <td
+              id="cell-3-9"
+              onclick="cellClick(3, 9)"
+              onmouseover="cellHover(3, 9)"
+            ></td>
+          </tr>
+          <tr>
+            <td
+              id="cell-4-1"
+              onclick="cellClick(4, 1)"
+              onmouseover="cellHover(4, 1)"
+            ></td>
+            <td
+              id="cell-4-2"
+              onclick="cellClick(4, 2)"
+              onmouseover="cellHover(4, 2)"
+            ></td>
+            <td
+              id="cell-4-3"
+              onclick="cellClick(4, 3)"
+              onmouseover="cellHover(4, 3)"
+            ></td>
+            <td
+              id="cell-4-4"
+              onclick="cellClick(4, 4)"
+              onmouseover="cellHover(4, 4)"
+            ></td>
+            <td
+              id="cell-4-5"
+              onclick="cellClick(4, 5)"
+              onmouseover="cellHover(4, 5)"
+            ></td>
+            <td
+              id="cell-4-6"
+              onclick="cellClick(4, 6)"
+              onmouseover="cellHover(4, 6)"
+            ></td>
+            <td
+              id="cell-4-7"
+              onclick="cellClick(4, 7)"
+              onmouseover="cellHover(4, 7)"
+            ></td>
+            <td
+              id="cell-4-8"
+              onclick="cellClick(4, 8)"
+              onmouseover="cellHover(4, 8)"
+            ></td>
+            <td
+              id="cell-4-9"
+              onclick="cellClick(4, 9)"
+              onmouseover="cellHover(4, 9)"
+            ></td>
+          </tr>
+          <tr>
+            <td
+              id="cell-5-1"
+              onclick="cellClick(5, 1)"
+              onmouseover="cellHover(5, 1)"
+            ></td>
+            <td
+              id="cell-5-2"
+              onclick="cellClick(5, 2)"
+              onmouseover="cellHover(5, 2)"
+            ></td>
+            <td
+              id="cell-5-3"
+              onclick="cellClick(5, 3)"
+              onmouseover="cellHover(5, 3)"
+            ></td>
+            <td
+              id="cell-5-4"
+              onclick="cellClick(5, 4)"
+              onmouseover="cellHover(5, 4)"
+            ></td>
+            <td
+              id="cell-5-5"
+              onclick="cellClick(5, 5)"
+              onmouseover="cellHover(5, 5)"
+            ></td>
+            <td
+              id="cell-5-6"
+              onclick="cellClick(5, 6)"
+              onmouseover="cellHover(5, 6)"
+            ></td>
+            <td
+              id="cell-5-7"
+              onclick="cellClick(5, 7)"
+              onmouseover="cellHover(5, 7)"
+            ></td>
+            <td
+              id="cell-5-8"
+              onclick="cellClick(5, 8)"
+              onmouseover="cellHover(5, 8)"
+            ></td>
+            <td
+              id="cell-5-9"
+              onclick="cellClick(5, 9)"
+              onmouseover="cellHover(5, 9)"
+            ></td>
+          </tr>
+          <tr>
+            <td
+              id="cell-6-1"
+              onclick="cellClick(6, 1)"
+              onmouseover="cellHover(6, 1)"
+            ></td>
+            <td
+              id="cell-6-2"
+              onclick="cellClick(6, 2)"
+              onmouseover="cellHover(6, 2)"
+            ></td>
+            <td
+              id="cell-6-3"
+              onclick="cellClick(6, 3)"
+              onmouseover="cellHover(6, 3)"
+            ></td>
+            <td
+              id="cell-6-4"
+              onclick="cellClick(6, 4)"
+              onmouseover="cellHover(6, 4)"
+            ></td>
+            <td
+              id="cell-6-5"
+              onclick="cellClick(6, 5)"
+              onmouseover="cellHover(6, 5)"
+            ></td>
+            <td
+              id="cell-6-6"
+              onclick="cellClick(6, 6)"
+              onmouseover="cellHover(6, 6)"
+            ></td>
+            <td
+              id="cell-6-7"
+              onclick="cellClick(6, 7)"
+              onmouseover="cellHover(6, 7)"
+            ></td>
+            <td
+              id="cell-6-8"
+              onclick="cellClick(6, 8)"
+              onmouseover="cellHover(6, 8)"
+            ></td>
+            <td
+              id="cell-6-9"
+              onclick="cellClick(6, 9)"
+              onmouseover="cellHover(6, 9)"
+            ></td>
+          </tr>
+          <tr>
+            <td
+              id="cell-7-1"
+              onclick="cellClick(7, 1)"
+              onmouseover="cellHover(7, 1)"
+            ></td>
+            <td
+              id="cell-7-2"
+              onclick="cellClick(7, 2)"
+              onmouseover="cellHover(7, 2)"
+            ></td>
+            <td
+              id="cell-7-3"
+              onclick="cellClick(7, 3)"
+              onmouseover="cellHover(7, 3)"
+            ></td>
+            <td
+              id="cell-7-4"
+              onclick="cellClick(7, 4)"
+              onmouseover="cellHover(7, 4)"
+            ></td>
+            <td
+              id="cell-7-5"
+              onclick="cellClick(7, 5)"
+              onmouseover="cellHover(7, 5)"
+            ></td>
+            <td
+              id="cell-7-6"
+              onclick="cellClick(7, 6)"
+              onmouseover="cellHover(7, 6)"
+            ></td>
+            <td
+              id="cell-7-7"
+              onclick="cellClick(7, 7)"
+              onmouseover="cellHover(7, 7)"
+            ></td>
+            <td
+              id="cell-7-8"
+              onclick="cellClick(7, 8)"
+              onmouseover="cellHover(7, 8)"
+            ></td>
+            <td
+              id="cell-7-9"
+              onclick="cellClick(7, 9)"
+              onmouseover="cellHover(7, 9)"
+            ></td>
+          </tr>
+          <tr>
+            <td
+              id="cell-8-1"
+              onclick="cellClick(8, 1)"
+              onmouseover="cellHover(8, 1)"
+            ></td>
+            <td
+              id="cell-8-2"
+              onclick="cellClick(8, 2)"
+              onmouseover="cellHover(8, 2)"
+            ></td>
+            <td
+              id="cell-8-3"
+              onclick="cellClick(8, 3)"
+              onmouseover="cellHover(8, 3)"
+            ></td>
+            <td
+              id="cell-8-4"
+              onclick="cellClick(8, 4)"
+              onmouseover="cellHover(8, 4)"
+            ></td>
+            <td
+              id="cell-8-5"
+              onclick="cellClick(8, 5)"
+              onmouseover="cellHover(8, 5)"
+            ></td>
+            <td
+              id="cell-8-6"
+              onclick="cellClick(8, 6)"
+              onmouseover="cellHover(8, 6)"
+            ></td>
+            <td
+              id="cell-8-7"
+              onclick="cellClick(8, 7)"
+              onmouseover="cellHover(8, 7)"
+            ></td>
+            <td
+              id="cell-8-8"
+              onclick="cellClick(8, 8)"
+              onmouseover="cellHover(8, 8)"
+            ></td>
+            <td
+              id="cell-8-9"
+              onclick="cellClick(8, 9)"
+              onmouseover="cellHover(8, 9)"
+            ></td>
+          </tr>
+          <tr>
+            <td
+              id="cell-9-1"
+              onclick="cellClick(9, 1)"
+              onmouseover="cellHover(9, 1)"
+            ></td>
+            <td
+              id="cell-9-2"
+              onclick="cellClick(9, 2)"
+              onmouseover="cellHover(9, 2)"
+            ></td>
+            <td
+              id="cell-9-3"
+              onclick="cellClick(9, 3)"
+              onmouseover="cellHover(9, 3)"
+            ></td>
+            <td
+              id="cell-9-4"
+              onclick="cellClick(9, 4)"
+              onmouseover="cellHover(9, 4)"
+            ></td>
+            <td
+              id="cell-9-5"
+              onclick="cellClick(9, 5)"
+              onmouseover="cellHover(9, 5)"
+            ></td>
+            <td
+              id="cell-9-6"
+              onclick="cellClick(9, 6)"
+              onmouseover="cellHover(9, 6)"
+            ></td>
+            <td
+              id="cell-9-7"
+              onclick="cellClick(9, 7)"
+              onmouseover="cellHover(9, 7)"
+            ></td>
+            <td
+              id="cell-9-8"
+              onclick="cellClick(9, 8)"
+              onmouseover="cellHover(9, 8)"
+            ></td>
+            <td
+              id="cell-9-9"
+              onclick="cellClick(9, 9)"
+              onmouseover="cellHover(9, 9)"
+            ></td>
+          </tr>
+        </table>
       </div>
-    </section>
+    </main>
   </body>
+  <script src="sudoku.js"></script>
 </html>
 
 <!-- Program for Sudoku Generator -->
