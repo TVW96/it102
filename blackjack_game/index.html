@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+    <script src="./deckOfCards.js"></script>
+  </head>
+  <body>
+    <h1>BlackJack Game</h1>
+    <div class="game-container" id="game-container">
+      <div class="cards" id="dealer-cards">
+        <div class="card" id="dealer-card"></div>
+      </div>
+      <div class="cards" id="cards">
+        <div class="card" id="card"></div>
+      </div>
+      <button onclick="dealCards()" id="deal">Deal Cards</button>
+      <button onclick="hitMe()" id="hit">Hit me</button>
+      <button onclick="fold()" id="fold">Fold</button>
+    </div>
+  </body>
+  <script>
+    // TASK:
+    // ------------------------------
+    // - Card & Deck
+    // - Dealing
+    // - Player Actions
+    // - Dealer Actions
+    // - Game Logic
+    // - Graphics / UI
+    // - Validation & User Experience
+    // --------------------------------
+    //
+    // Step 1: Generate deck of cards
+    console.log(deck);
+    // Step 2: Shuffle cards
+    console.log(shuffledDeck);
+    // Step 3: Create Hand and Deal Cards
+    createHand();
+    // Step 4: Pass additional cards (hit me!)
+    // Step 5: Read the score
+  </script>
+</html>
