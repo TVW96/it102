@@ -5,5 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <h1>Shuffle Cards assignment</h1>
+    <h3>Deck of cards:</h3>
+    <div class="cards-display" id="deck">
+      <div class="card" id="card"></div>
+    </div>
+    <h3>Shuffled deck:</h3>
+    <div class="cards-display" id="shuffled-deck">
+      <div class="card" id="shuffled-card"></div>
+    </div>
+  </body>
+  <script src="./deckOfCards.js"></script>
+  <script>
+    // Utilize the deck of 52 playing cards that was produced through the "Deck of Cards Assignment" code.
+    // After the complete deck has been generated, showcase its contents (display all cards).
+    // Devise a procedure for shuffling the deck of cards.
+    // Present the shuffled deck of cards (display all cards).
+
+    const deck = generateDeck();
+
+    function displayCards(deck) {
+      const container = document.getElementById("deck");
+      const template = document.getElementById("card");
+      // keep a single template element, clear the rest
+      container.innerHTML = template ? template.outerHTML : "";
+      const baseTemplate = container.querySelector(".card");
+      if (!baseTemplate) return;
+      for (let i = 0; i < deck.length; i++) {
+        const newCard = baseTemplate.cloneNode(true);
+        newCard.removeAttribute("id");
+        newCard.textContent = deck[i].rank + " of " + deck[i].suit;
+        container.appendChild(newCard);
+      }
+    }
+
+    function shuffleDeck(deck) {
+      const result = deck.slice();
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+      return result;
+    }
+
+    function displayShuffledDeck(deck) {
+      const container = document.getElementById("shuffled-deck");
+      const template = document.getElementById("shuffled-card");
+      // keep a single template element, clear the rest
+      container.innerHTML = template ? template.outerHTML : "";
+      const baseTemplate = container.querySelector(".card");
+      if (!baseTemplate) return;
+      const shuffled = shuffleDeck(deck);
+      for (let i = 0; i < shuffled.length; i++) {
+        const newCard = baseTemplate.cloneNode(true);
+        newCard.removeAttribute("id");
+        newCard.textContent = shuffled[i].rank + " of " + shuffled[i].suit;
+        container.appendChild(newCard);
+      }
+      return shuffled;
+    }
+
+    // display the ordered deck
+    displayCards(deck);
+    // display shuffled deck
+    displayShuffledDeck(deck);
+  </script>
+  <style>
+    .cards-display {
+      width: 100vw;
+      height: 400px;
+      margin: 16px auto;
+      padding: 12px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #195a26;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow: auto;
+    }
+    .card {
+      width: 100px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #888;
+      border-radius: 4px;
+      background: white;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+      font-weight: 600;
+    }
+  </style>
 </html>
