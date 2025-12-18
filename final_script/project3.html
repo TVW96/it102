@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      /* ************* POKER DICE ***************
+     Creates 5 dice with A, K, Q, J, 10, 9.
+     Dice all roll.
+     Roll gives results of each of the 5 dice.
+  ************* POKER DICE *************** */
+
+      function Die(sides) {
+        this.sides = sides;
+
+        this.values = [];
+
+        // BUG #1 (SYNTAX): variable i was not declared
+        // for(i = 0; i < this.sides; i++){
+        // FIX:
+        for (var i = 0; i < this.sides; i++) {
+          this.values[i] = i;
+        }
+
+        this.roll = function () {
+          // BUG #2 (LOGIC): Math.ceil caused index to go out of bounds
+          // var showing = Math.ceil(Math.random()*this.sides);
+          // FIX:
+          var showing = Math.floor(Math.random() * this.sides);
+
+          return this.values[showing];
+        };
+
+        var pokerSide = ["A", "K", "Q", "J", "10", "9"];
+
+        this.poker = function () {
+          // BUG #3 (GAMEPLAY): dice sides were incorrect (5 instead of 6)
+          // This prevented all poker values from being used
+          // FIX: sides must match pokerSide length
+          for (var i = 0; i < pokerSide.length; i++) {
+            this.values[i] = pokerSide[i];
+          }
+        };
+      }
+
+      // BUG #4 (SYNTAX): myDie declared but myDice used
+      // var myDie = [];
+      // FIX:
+      var myDice = [];
+
+      for (var c = 0; c < 5; c++) {
+        // BUG #3 CONTINUED (GAMEPLAY): Die created with 5 sides instead of 6
+        // myDice[c] = new Die(5);
+        // FIX:
+        myDice[c] = new Die(6);
+
+        myDice[c].poker();
+      }
+
+      var output = "";
+
+      for (var k = 0; k < 5; k++) {
+        output += myDice[k].roll();
+        output += " ";
+      }
+
+      alert("Poker Result\n\n" + output);
+    </script>
+  </body>
+</html>
